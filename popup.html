@@ -2,25 +2,16 @@
 <html>
 <head>
     <title>ClearConsent</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 10px;
-        }
-        #summary {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            font-size: 14px;
-            color: #333;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>ClearConsent</h1>
-<button id="summarize-btn">Summarize Terms</button>
-<div id="summary">Summary will appear here...</div>
+<img id="logo" src="images/ClearConsent%20App%20Logo.png" alt="ClearConsent Logo"></img>
+<div id="webpage">
+    <img id="icon" alt="Privacy Icon" style="max-width: 100px; margin-right: 10px;">
+    <p id="hostname"> </p>
+</div>
+<div id="summary">Loading summary...</div>
+<button id="toggle-green">See Good Policies</button>
 
 <script src="popup.js"></script>
 </body>
