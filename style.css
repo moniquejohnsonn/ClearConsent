@@ -6,13 +6,13 @@
 
 #webpage {
     display: flex;
-    align-items: center;  /* Vertically centers the items */
+    align-items: center;
     justify-content: center;
-    gap: 10px;  /* Adds space between the icon and hostname */
+    gap: 10px;
 }
 
 #hostname {
-    margin: 0;  /* Removes any default margins */
+    margin: 0;
     font-size: larger;
     font-weight: bold;
 }
@@ -21,13 +21,13 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f6f9;
     color: #333;
-    width: 500px;  /* Desired width */
+    width: 500px;
     padding: 20px;
     text-align: center;
 }
 
 #logo {
-    width: 400px;  /* Smaller logo for better fitting */
+    width: 400px;
     height: auto;
     margin-bottom: 20px;
 }
@@ -48,27 +48,27 @@ body {
 .privacy-item {
     margin-bottom: 15px;
     padding: 15px;
-    border-radius: 8px; /* Rounded corners for each item */
+    border-radius: 8px;
     font-size: 14px;
     color: #333;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease-in-out;
 }
 
+.note-icon {
+    float: left;
+    width: 50px;
+    margin: 10px;
+}
+
 .privacy-item p {
-    margin-bottom: 5px; /* Space between each line */
+    margin-bottom: 5px;
 }
 
-.privacy-item em {
-    font-style: italic;
-    color: #555; /* Lighter color for the privacy score */
-}
-
-/* Add hover effect for better interaction */
 .privacy-item:hover {
     opacity: 0.9;
 }
-/* Green items hidden by default */
+
 .privacy-item.hidden-green {
     display: none;
 }
@@ -82,44 +82,149 @@ body {
 }
 
 .privacy-item.green {
-    display: block; /* Show the green items */
+    display: block;
 }
 
-/* Add hover effect for better interaction */
 .privacy-item:hover {
-    opacity: 0.9;
+    opacity: 0.8;
 }
 
-/* Initial style for the toggle button */
-#toggle-green {
+#navigate-button {
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #ddd;  /* Default background */
-    color: #333;
+    background-color: #4CAF50;
+    color: white;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
-    width: 150px;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Style for the 'on' state (showing good policies) */
-#toggle-green.on {
-    background-color: #4CAF50;  /* Green when "on" */
+#navigate-button:hover {
+    background-color: #45a049;
+}
+#navigate-button:active {
+    transform: scale(0.98);
+}
+
+#back-button {
+    background-color: #4078BE;
     color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+
 }
 
-/* Add a hover effect for better interaction */
-#toggle-green:hover {
-    opacity: 0.8;
+#back-button:hover {
+    background-color: #4078BE;
 }
 
-/* Optional: Style the button text when in different states */
-#toggle-green.on {
-    content: "Hide Good Policies";
+/* Generate Letter Button */
+#generate-letter {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-#toggle-green:active {
+/* Hover and Active Effects for Button */
+#generate-letter:hover {
+    background-color: #45a049;
+}
+#generate-letter:active {
     transform: scale(0.98); /* Slight "pressed" effect */
+}
+
+.raised-box {
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Flexbox container for the text and switch */
+.toggle-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  /* Align items vertically centered */
+    margin: 20px 0;
+}
+
+#toggle-text {
+    font-weight: bold;
+    font-size: large;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #4078BE;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #4078BE;
+}
+
+input:checked + .slider:before {
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.credits {
+    font-size: x-small;
+    color: grey;
 }

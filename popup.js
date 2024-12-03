@@ -1,6 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
-    fetchAndDisplayPrivacyDetails(); // Load and display data immediately
+    fetchAndDisplayPrivacyDetails();
+
+    document.getElementById('summary').addEventListener('change', handleSelectionChange);
+
+    document.getElementById('navigate-button').addEventListener('click', navigateToDetails);
 });
+
+
+function handleSelectionChange() {
+    const selectedItems = document.querySelectorAll('.select-item:checked');
+    const navigateButton = document.getElementById('navigate-button');
+
+    if (selectedItems.length > 0) {
+        navigateButton.style.display = 'block';
+    } else {
+        navigateButton.style.display = 'none';
+    }
+}
 
 function fetchAndDisplayPrivacyDetails() {
     chrome.runtime.sendMessage({ type: "getPrivacyData" }, (response) => {
@@ -12,7 +28,6 @@ function fetchAndDisplayPrivacyDetails() {
 
         const data = response.data;
 
-        // Check if the #icon element exists in the HTML, then set its src attribute
         const iconElement = document.getElementById('icon');
         if (data.icon && iconElement) {
             const iconUrl = `https://privacyspy.org/static/icons/${data.icon}`;
@@ -23,7 +38,7 @@ function fetchAndDisplayPrivacyDetails() {
         document.getElementById('hostname').innerText = data.name;
 
 
-        // Filter for handling and collection categories
+        // Filter for handling and collection categories from api
         const handlingCollection = data.rubric.filter(entry =>
             entry.question.category === "handling" || entry.question.category === "collection"
         );
@@ -36,20 +51,23 @@ function fetchAndDisplayPrivacyDetails() {
             let backgroundColor;
             let visibilityClass = ''; // Default visibility (visible)
             if (percent < 50) {
-                backgroundColor = "red";
-                visibilityClass = 'colors'
+                backgroundColor = "#FF5B61";
+                visibilityClass = 'colors';
+                checkboxHtml = `<input type="checkbox" class="select-item" data-question="${entry.question.text}" data-option="${entry.option.text}">`;
             } else if (percent < 70) {
-                backgroundColor = "yellow";
-                visibilityClass = 'colors'
+                backgroundColor = "#ffcc5c";
+                visibilityClass = 'colors';
+                checkboxHtml = `<input type="checkbox" class="select-item" data-question="${entry.question.text}" data-option="${entry.option.text}">`;
             } else {
-                backgroundColor = "green";
+                backgroundColor = "#96ceb4";
                 visibilityClass = 'hidden-green'; // Add a class to hide green items by default
             }
 
             return `
                 <div class="privacy-item ${visibilityClass}" style="background-color: ${backgroundColor};">
+                ${checkboxHtml}
+                <img class="note-icon" src="/images/note-icon.png" alt="Note Icon">
                     <p><strong>${entry.question.text}:</strong> ${entry.option.text}</p>
-                    <p><em>Privacy Score: ${percent}%</em></p>
                 </div>
             `;
         }).join('');
@@ -62,13 +80,45 @@ function fetchAndDisplayPrivacyDetails() {
     });
 }
 
+function navigateToDetails() {
+    const selectedItems = Array.from(document.querySelectorAll('.select-item:checked'))
+        .map(item => ({
+            question: item.getAttribute('data-question'),
+            option: item.getAttribute('data-option')
+        }));
+
+    // debugging - ensure items selected are captured
+    console.log('Selected Items:', selectedItems);
+
+    const selectedItemsJson = encodeURIComponent(JSON.stringify(selectedItems));
+
+    window.location.href = `customize-letter.html?items=${selectedItemsJson}`;
+}
+
 
 function toggleGreenItems() {
     const greenItems = document.querySelectorAll('.privacy-item.green');
-    const hiddenColorItems = document.querySelectorAll('.privacy-item.hidden-colors')
+    const hiddenColorItems = document.querySelectorAll('.privacy-item.hidden-colors');
+    const hiddenGreenItems = document.querySelectorAll('.privacy-item.hidden-green');
+    const colorItems = document.querySelectorAll('.privacy-item.colors');
+    const toggleSwitch = document.getElementById('toggle-green');
 
-    // Check if the toggle is on (green items are currently shown)
-    if (document.getElementById('toggle-green').classList.contains('on')) {
+    // Check if the toggle is on
+    if (toggleSwitch.checked) {
+        // Show green items (remove hidden-green and add green class)
+        hiddenGreenItems.forEach(item => {
+            item.classList.remove('hidden-green');
+            item.classList.add('green');
+        });
+
+        // Hide red/yellow items (remove colors and add hidden-colors class)
+        colorItems.forEach(item => {
+            item.classList.remove('colors');
+            item.classList.add('hidden-colors');
+        });
+
+        document.getElementById('toggle-text').innerText = "Hide Good Policies";
+    } else {
         // Hide green items (remove the green class and add hidden-green class)
         greenItems.forEach(item => {
             item.classList.remove('green');
@@ -81,28 +131,6 @@ function toggleGreenItems() {
             item.classList.add('colors');
         });
 
-        // Change button text to "See Good Policies"
-        document.getElementById('toggle-green').innerText = "See Good Policies";
-    } else {
-        // Show green items (remove hidden-green and add green class)
-        const hiddenGreenItems = document.querySelectorAll('.privacy-item.hidden-green');
-        const colorItems = document.querySelectorAll('.privacy-item.colors');
-
-        hiddenGreenItems.forEach(item => {
-            item.classList.remove('hidden-green');
-            item.classList.add('green');
-        });
-
-        // Hide red/yellow items (remove colors and add hidden-colors class)
-        colorItems.forEach(item => {
-            item.classList.remove('colors');
-            item.classList.add('hidden-colors');
-        });
-
-        // Change button text to "Hide Good Policies"
-        document.getElementById('toggle-green').innerText = "Hide Good Policies";
+        document.getElementById('toggle-text').innerText = "See Good Policies";
     }
-
-    // Toggle the button's "on" state (showing green items)
-    document.getElementById('toggle-green').classList.toggle('on');
 }

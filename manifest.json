@@ -26,5 +26,11 @@
       "matches": ["<all_urls>"],
       "js": ["content.js"]
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["customize-letter.html"],
+      "matches": ["<all_urls>"]
+    }
   ]
 }

@@ -5,13 +5,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<img id="logo" src="images/ClearConsent%20App%20Logo.png" alt="ClearConsent Logo"></img>
+<img id="logo" src="images/ClearConsent%20App%20Logo.png" alt="ClearConsent Logo">
 <div id="webpage">
     <img id="icon" alt="Privacy Icon" style="max-width: 100px; margin-right: 10px;">
-    <p id="hostname"> </p>
+    <p id="hostname"></p>
 </div>
 <div id="summary">Loading summary...</div>
-<button id="toggle-green">See Good Policies</button>
+<div class="toggle-container">
+    <p id="toggle-text"> See Good Policies</p>
+    <label class="switch">
+        <input type="checkbox" id="toggle-green">
+        <span class="slider round"></span>
+    </label>
+</div>
+<div>
+    <button id="navigate-button" style="display:none">Proceed to Opt-Out Letter</button>
+</div>
+
+<div class="credits"> <p style="font-size:small">Credits</p>
+    <a href="https://privacyspy.org/">PrivacySpy</a> <br>
+    <a href="https://www.flaticon.com/free-icons/note" title="note icons">Note icons created by Freepik - Flaticon</a>
+</div>
 
 <script src="popup.js"></script>
 </body>

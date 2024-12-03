@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Letter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div>
+    <button id="back-button">< Back</button>
+</div>
+
+<!-- Logo -->
+<img id="logo" src="images/ClearConsent%20App%20Logo.png" alt="ClearConsent Logo">
+
+
+<h1> Generate Opt-Out Letter</h1>
+
+<!-- Location Selector Section -->
+<div id="location-section">
+    <select id="location-selector">
+        <option value="default" disabled selected>Select your location</option>
+        <optgroup label="United State">
+            <option value="California - CCPA">California</option>
+            <option value="Colorado - CPA">Colorado</option>
+            <option value="Connecticut - CDPA">Connecticut</option>
+            <option value="Nevada - NRS 603A">Nevada</option>
+        </optgroup>
+        <option value="Europe - GPDR">European Union</option>
+    </select>
+</div>
+
+<div id="letter-output" class="raised-box">
+    <!-- Summary content will be dynamically populated -->
+</div>
+
+<!-- Generate Letter Button -->
+<button id="generate-letter">Generate Letter</button>
+
+<script src="generate-letter.js"></script>
+</body>
+</html>

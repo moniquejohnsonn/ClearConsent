@@ -69,6 +69,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             }
             sendResponse({ data: result.privacyDetails });
         });
-        return true; // Keeps the messaging channel open for async response
+        return true;
     }
 });
